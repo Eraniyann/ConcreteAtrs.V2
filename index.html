@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Concrete Arts — Portfolio</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
+  <style>
+    .text-bold{font-weight: bold; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;}
+
+
+    /* ===== Reset & base ===== */
+    :root{
+      --bg: #ffffff;
+      --fg: #000000;
+      --muted: #6b6b6b;
+      --accent: #000000;
+      --gap: 18px;
+      --max-width: 1200px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial; color:var(--fg);background:var(--bg);}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+
+    /* ===== Layout container ===== */
+    .wrap{max-width:var(--max-width);margin:0 auto;padding:22px}
+
+    /* ===== NAVBAR ===== */
+    .navbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand img{width:52px;height:52px;object-fit:cover;border-radius:8px;border:1px solid #000}
+    .brand .title{font-size:20px;font-weight:700}
+    .brand .subtitle{font-size:12px;color:var(--muted)}
+
+    /* mobile hamburger: checkbox method (no JS) */
+    .nav-toggle{display:none}
+    .hamburger{display:none;font-size:32px;cursor:pointer;user-select:none}
+    .navlinks{display:flex;gap:18px;align-items:center}
+    .navlinks a{padding:8px 12px;border-radius:8px;font-weight:600}
+    .navlinks a:hover{background:rgba(0,0,0,0.06)}
+
+    /* show hamburger on small screens */
+    @media (max-width:800px){
+      .navlinks{display:none}
+      .hamburger{display:block}
+      /* when checkbox checked, show navlinks stacked */
+      .nav-toggle:checked + .hamburger + .navlinks{
+        display:flex;
+        position:absolute;
+        left:0;
+        right:0;
+        top:72px;
+        background:var(--bg);
+        flex-direction:column;
+        gap:10px;
+        padding:16px;
+        border-top:1px solid rgba(0,0,0,0.06);
+        z-index:50;
+      }
+    }
+
+    /* ===== HERO ===== */
+    .hero{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0}
+    .hero .intro{max-width:68%}
+    .hero h1{font-size:26px;margin:0}
+    .hero p{margin:6px 0;color:var(--muted)}
+
+    /* ===== Category buttons (centered) ===== */
+    .category-buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin:20px 0}
+    .category-buttons button{
+      border:1px solid rgba(0,0,0,0.08);
+      background:var(--bg);
+      color:var(--fg);
+      padding:10px 16px;border-radius:999px;
+      font-weight:700;cursor:pointer;
+      transition:transform .12s, box-shadow .12s;
+    }
+    .category-buttons button:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+
+    /* ===== Gallery section per category ===== */
+    section.gallery-section{margin:30px 0}
+    section.gallery-section h2{font-size:20px;margin:0 0 12px;padding-left:8px}
+    .grid{
+      display:grid;
+      gap:var(--gap);
+      grid-template-columns:repeat(4,1fr);
+    }
+    .card{
+      position:relative;
+      border-radius:10px;
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,0.06);
+      background:#fff;
+    }
+    .card img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .25s}
+    .card:hover img{transform:scale(1.04)}
+    .card .meta{
+      position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding:12px;pointer-events:none;
+    }
+    .view-btn{
+      pointer-events:auto;background:rgba(0,0,0,0.82);color:#fff;padding:8px 12px;border-radius:8px;font-weight:700;text-decoration:none;border:none;cursor:pointer;
+    }
+
+    /* responsive columns */
+    @media (max-width:1100px){
+      .grid{grid-template-columns:repeat(3,1fr)}
+    }
+    @media (max-width:720px){
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .hero{flex-direction:column;align-items:flex-start}
+      .hero .intro{max-width:100%}
+      .card img{height:180px}
+    }
+
+    /* ===== Popup (lightbox) ===== */
+    .lightbox{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.9);
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      z-index:9999;
+    }
+    .lightbox.active{display:flex}
+    .lightbox img{max-width:95%;max-height:85vh;border-radius:8px;box-shadow:0 18px 40px rgba(0,0,0,0.6)}
+    .lightbox .close{
+      position:absolute;right:28px;top:20px;color:#fff;font-size:34px;text-decoration:none;cursor:pointer;
+      background:transparent;border:none;
+    }
+
+    /* ===== About / Contact split ===== */
+    .split{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-top:40px}
+    .card-panel{padding:18px;border-radius:12px;border:1px solid rgba(0,0,0,0.06);background:#fff}
+    .contact-row{display:flex;gap:12px;align-items:center;margin-bottom:8px}
+    .icon{width:44px;height:44px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);display:grid;place-items:center;font-size:18px}
+
+    @media (max-width:900px){ .split{grid-template-columns:1fr} }
+
+    /* ===== Footer ===== */
+    .footer{margin:40px 0;text-align:center;color:var(--muted);font-size:14px;padding:10px 0}
+  </style>
+</head>
+<body>
+
+  <div  class="wrap">
+    <!-- NAVBAR -->
+    <header class="navbar" role="banner">
+      <div class="brand" aria-label="Concrete Arts">
+        <img src="logo/Calogo.jpg.jpeg" data-src="logo/Calogo.jpg.jpeg" alt="Concrete Arts logo">
+        <div>
+          <div class="title">Concrete-Arts</div>
+          <div class="subtitle">Modern art forged in Concrete</div>
+        </div>
+      </div>
+
+      <!-- checkbox toggler for mobile -->
+      <input class="nav-toggle" id="nav-toggle" type="checkbox" />
+      <label class="hamburger" for="nav-toggle" aria-hidden="true">&#9776;</label>
+
+      <nav class="navlinks" role="navigation" aria-label="Main navigation">
+        <a href="#gallery-nature">Gallery</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <!-- Caruosel-->
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+    <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+    
+  </ol>
+
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="carosuelimages/caro1.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="carosuelimages/caro2.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="carosuelimages/caro3.jpg" class="d-block w-100" alt="...">
+    </div>
+    
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+
+    <!-- Title -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="intro">
+        <h1 id="hero-title">Our Projects</h1>
+        <p>With a strong global portfolio that includes prestigious developments in <span class="text-bold">Dubai, Abu Dhabi, Saudi
+            Arabia, Warner Bros. World, SeaWorld, and Qiddiya Water Park, along with landmark projects in
+              India such as VGP Marine Kingdom in Chennai and Science City in Ahmedabad, Gujarat, we bring
+                world-class expertise to every creation.</span></p>
+      </div>
+    </section>
+
+    <!-- CATEGORY BUTTONS -->
+    <div class="category-buttons" role="tablist" aria-label="Artwork categories">
+      <button onclick="scrollToId('gallery-house')">House (Int & Ext)</button>
+      <button onclick="scrollToId('gallery-rock')">Rock</button>
+      <button onclick="scrollToId('gallery-vgp')">Stack Stone</button>
+      <button onclick="scrollToId('gallery-cartoonist')">Cartoonist</button>
+      <button onclick="scrollToId('gallery-garden')">Garden</button>
+      <button onclick="scrollToId('gallery-aquarium')">Aquarium</button>
+      <button onclick="scrollToId('gallery-wood')">Wood</button>
+    </div>
+
+    <!-- ===== GALLERY: House(10 images) ===== -->
+    <section id="gallery-house" class="gallery-section" aria-labelledby="house-title">
+      <h2 id="house-title">House (interior & exterior) — artworks</h2>
+      <div class="grid" role="list">
+        <!-- Replace the src with your own filenames (examples below) -->
+        <div class="card" role="listitem">
+          <img src="images/House Interior/house1.jpeg" alt="House 1">
+          <div class="meta"><button class="view-btn" data-src="images/House Interior/house1.jpeg">View</button></div>
+        </div>
+        <div class="card"><img src="images/House Interior/house2.jpeg" alt="House 2"><div class="meta"><button class="view-btn" data-src="images/House Interior/house2.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house3.jpeg" alt="House 3"><div class="meta"><button class="view-btn" data-src="images/House Interior/house3.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house4.jpeg" alt="House 4"><div class="meta"><button class="view-btn" data-src="images/House Interior/house4.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house5.jpeg" alt="House 5"><div class="meta"><button class="view-btn" data-src="images/House Interior/house5.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house6.jpeg" alt="House 6"><div class="meta"><button class="view-btn" data-src="images/House Interior/house6.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house7.jpeg" alt="House 7"><div class="meta"><button class="view-btn" data-src="images/House Interior/house7.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house8.jpeg" alt="House 8"><div class="meta"><button class="view-btn" data-src="images/House Interior/house8.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house9.jpeg" alt="House 9"><div class="meta"><button class="view-btn" data-src="images/House Interior/house9.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house10.jpeg" alt="House 10"><div class="meta"><button class="view-btn" data-src="images/House Interior/house10.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house11.jpeg" alt="House 11"><div class="meta"><button class="view-btn" data-src="images/House Interior/house11.jpeg">View</button></div></div>
+        <div class="card"><img src="images/House Interior/house12.jpeg" alt="House 12"><div class="meta"><button class="view-btn" data-src="images/House Interior/house12.jpeg">View</button></div></div>
+      </div>
+    </section>
+
+    <!-- ===== GALLERY: Rock (10 images) ===== -->
+    <section id="gallery-rock" class="gallery-section" aria-labelledby="rock-title">
+      <h2 id="rock-title">Rock — artworks</h2>
+      <div class="grid">
+        <div class="card"><img src="images/Rock/rock1.jpg" alt="Rock 1"><div class="meta"><button class="view-btn" data-src="images/Rock/rock1.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock2.jpg" alt="Rock 2"><div class="meta"><button class="view-btn" data-src="images/Rock/rock2.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock3.jpg" alt="Rock 3"><div class="meta"><button class="view-btn" data-src="images/Rock/rock3.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock4.jpg" alt="Rock 4"><div class="meta"><button class="view-btn" data-src="images/Rock/rock4.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock5.jpg" alt="Rock 5"><div class="meta"><button class="view-btn" data-src="images/Rock/rock5.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock6.jpg" alt="Rock 6"><div class="meta"><button class="view-btn" data-src="images/Rock/rock6.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock7.jpg" alt="Rock 7"><div class="meta"><button class="view-btn" data-src="images/Rock/rock7.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock8.jpg" alt="Rock 8"><div class="meta"><button class="view-btn" data-src="images/Rock/rock8.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock9.jpg" alt="Rock 9"><div class="meta"><button class="view-btn" data-src="images/Rock/rock9.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock10.jpg" alt="Rock 10"><div class="meta"><button class="view-btn" data-src="images/Rock/rock10.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock11.jpg" alt="Rock 11"><div class="meta"><button class="view-btn" data-src="images/Rock/rock11.jpg">View</button></div></div>
+        <div class="card"><img src="images/Rock/rock12.jpg" alt="Rock 12"><div class="meta"><button class="view-btn" data-src="images/Rock/rock12.jpg">View</button></div></div>
+      </div>
+    </section>
+
+    <!-- ===== GALLERY: StackStone (10 images) ===== -->
+    <section id="gallery-vgp" class="gallery-section" aria-labelledby="vgp-title">
+      <h2 id="vgp-title">Stack Stone — artworks</h2>
+      <div class="grid">
+        <div class="card"><img src="images/VGP/vgp1.jpg" alt="VGP 1"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp1.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp2.jpg" alt="VGP 2"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp2.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp3.jpg" alt="VGP 3"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp3.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp4.jpg" alt="VGP 4"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp4.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp5.jpg" alt="VGP 5"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp5.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp6.jpg" alt="VGP 6"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp6.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp7.jpg" alt="VGP 7"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp7.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp8.jpg" alt="VGP 8"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp8.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp9.jpg" alt="VGP 9"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp9.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp10.jpg" alt="VGP 10"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp10.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp11.jpg" alt="VGP 11"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp11.jpg">View</button></div></div>
+        <div class="card"><img src="images/VGP/vgp12.jpg" alt="VGP 12"><div class="meta"><button class="view-btn" data-src="images/VGP/vgp12.jpg">View</button></div></div>
+      </div>
+    </section>
+
+    <!-- ===== GALLERY: Cartoonist  (10 images) ===== -->
+    <section id="gallery-cartoonist" class="gallery-section" aria-labelledby="cartoonist-title">
+      <h2 id="cartoonist-title">Cartoonist — artworks</h2>
+      <div class="grid">
+        <div class="card"><img src="images/cartoon/cartoon1.jpg" alt="Cartoonist 1"><div class="meta"><button class="view-btn" data-src="images/cartoon/cartoon1.jpg">View</button></div></div>
+        <div class="card"><img src="images/cartoon/cartoon2.jpg" alt="Cartoonist 2"><div class="meta"><button class="view-btn" data-src="images/cartoon/cartoon2.jpg">View</button></div></div>
+        <div class="card"><img src="images/cartoon/cartoon3.jpg" alt="Cartoonist 3"><div class="meta"><button class="view-btn" data-src="images/cartoon/cartoon3.jpg">View</button></div></div>
+        <div class="card"><img src="images/cartoon/cartoon4.jpg" alt="Cartoonist 4"><div class="meta"><button class="view-btn" data-src="images/cartoon/cartoon4.jpg">View</button></div></div>
+        <div class="card"><img src="images/cartoon/cartoon5.jpg" alt="Cartoonist 5"><div class="meta"><button class="view-btn" data-src="images/cartoon/cartoon5.jpg">View</button></div></div>
+        <div class="card"><img src="images/cartoon/cartoon6.jpg" alt="Cartoonist 6"><div class="meta"><button class="view-btn" data-src="images/cartoon/cartoon6.jpg">View</button></div></div>
+        
+      </div>
+    </section>
+
+     <!-- ===== GALLERY: Garden (10 images) ===== -->
+    <section id="gallery-garden" class="gallery-section" aria-labelledby="garden-title">
+      <h2 id="garden-title">Garden — artworks</h2>
+      <div class="grid">
+        <div class="card"><img src="images/Garden/garden1.jpeg" alt="Garden 1"><div class="meta"><button class="view-btn" data-src="images/Garden/garden1.jpeg">View</button></div></div>
+        <div class="card"><img src="images/Garden/garden2.jpeg" alt="Garden 2"><div class="meta"><button class="view-btn" data-src="images/Garden/garden2.jpeg">View</button></div></div>
+        <div class="card"><img src="images/Garden/garden3.jpeg" alt="Garden 3"><div class="meta"><button class="view-btn" data-src="images/Garden/garden3.jpeg">View</button></div></div>
+        <div class="card"><img src="images/Garden/garden4.jpeg" alt="Garden 4"><div class="meta"><button class="view-btn" data-src="images/Garden/garden4.jpeg">View</button></div></div>
+        <div class="card"><img src="images/Garden/garden5.jpeg" alt="Garden 5"><div class="meta"><button class="view-btn" data-src="images/Garden/garden5.jpeg">View</button></div></div>
+        <div class="card"><img src="images/Garden/garden6.jpeg" alt="Garden 6"><div class="meta"><button class="view-btn" data-src="images/Garden/garden6.jpeg">View</button></div></div>
+        <div class="card"><img src="images/Garden/garden7.jpeg" alt="Garden 7"><div class="meta"><button class="view-btn" data-src="images/Garden/garden7.jpeg">View</button></div></div>
+        <div class="card"><img src="images/Garden/garden8.jpeg" alt="Garden 8"><div class="meta"><button class="view-btn" data-src="images/Garden/garden8.jpeg">View</button></div></div>
+        <div class="card"><img src="images/Garden/garden9.jpeg" alt="Garden 9"><div class="meta"><button class="view-btn" data-src="images/Garden/garden9.jpeg">View</button></div></div>
+        <div class="card"><img src="images/Garden/garden10.jpeg" alt="Garden 10"><div class="meta"><button class="view-btn" data-src="images/Garden/garden10.jpeg">View</button></div></div>
+      </div>
+    </section>
+
+     <!-- ===== GALLERY: Facede  (10 images) ===== -->
+    <section id="gallery-facede" class="gallery-section" aria-labelledby="facede-title">
+      <h2 id="facede-title">Facede — artworks</h2>
+      <div class="grid">
+        <div class="card"><img src="images/facade/facede1.jpg" alt="Facede 1"><div class="meta"><button class="view-btn" data-src="images/facade/facede1.jpg">View</button></div></div>
+        <div class="card"><img src="images/facade/facede2.jpg" alt="Facede 2"><div class="meta"><button class="view-btn" data-src="images/facade/facede2.jpg">View</button></div></div>
+        <div class="card"><img src="images/facade/facede3.jpg" alt="Facede 3"><div class="meta"><button class="view-btn" data-src="images/facade/facede3.jpg">View</button></div></div>
+        <div class="card"><img src="images/facade/facede4.jpg" alt="Facede 4"><div class="meta"><button class="view-btn" data-src="images/facade/facede4.jpg">View</button></div></div>
+        <div class="card"><img src="images/facade/facede5.jpg" alt="Facede 5"><div class="meta"><button class="view-btn" data-src="images/facade/facede5.jpg">View</button></div></div>
+        <div class="card"><img src="images/facade/facede6.jpg" alt="Facede 6"><div class="meta"><button class="view-btn" data-src="images/facade/facede6.jpg">View</button></div></div>
+        <div class="card"><img src="images/facade/facede7.jpg" alt="Facede 7"><div class="meta"><button class="view-btn" data-src="images/facade/facede7.jpg">View</button></div></div>
+        <div class="card"><img src="images/facade/facede8.jpg" alt="Facede 8"><div class="meta"><button class="view-btn" data-src="images/facade/facede8.jpg">View</button></div></div>
+        <div class="card"><img src="images/facade/facede9.jpg" alt="Facede 9"><div class="meta"><button class="view-btn" data-src="images/facade/facede9.jpg">View</button></div></div>
+        <div class="card"><img src="images/facade/facede10.jpg" alt="Facede 10"><div class="meta"><button class="view-btn" data-src="images/facade/facede10.jpg">View</button></div></div>
+      </div>
+    </section>
+
+     <!-- ===== GALLERY: Aquarium (10 images) ===== -->
+    <section id="gallery-aquarium" class="gallery-section" aria-labelledby="aquarium-title">
+      <h2 id="aquarium-title">Aquarium — artworks</h2>
+      <div class="grid">
+        <div class="card"><img src="images/Aquarium/aqua1.jpg" alt="Aquarium 1"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua1.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua2.jpg" alt="Aquarium 2"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua2.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua3.jpg" alt="Aquarium 3"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua3.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua4.jpg" alt="Aquarium 4"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua4.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua5.jpg" alt="Aquarium 5"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua5.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua6.jpg" alt="Aquarium 6"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua6.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua7.jpg" alt="Aquarium 7"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua7.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua8.jpg" alt="Aquarium 8"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua8.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua9.jpg" alt="Aquarium 9"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua9.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua10.jpg" alt="Aquarium 10"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua10.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua11.jpg" alt="Aquarium 11"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua11.jpg">View</button></div></div>
+        <div class="card"><img src="images/Aquarium/aqua12.jpg" alt="Aquarium 12"><div class="meta"><button class="view-btn" data-src="images/Aquarium/aqua12.jpg">View</button></div></div>
+      </div>
+    </section>
+
+     <!-- ===== GALLERY: Wood (10 images) ===== -->
+    <section id="gallery-wood" class="gallery-section" aria-labelledby="wood-title">
+      <h2 id="wood-title">Wood — artworks</h2>
+      <div class="grid">
+        <div class="card"><img src="images/Wood/wood1.jpg" alt="Wood 1"><div class="meta"><button class="view-btn" data-src="images/Wood/wood1.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood2.jpg" alt="Wood 2"><div class="meta"><button class="view-btn" data-src="images/Wood/wood2.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood3.jpg" alt="Wood 3"><div class="meta"><button class="view-btn" data-src="images/Wood/wood3.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood4.jpg" alt="Wood 4"><div class="meta"><button class="view-btn" data-src="images/Wood/wood4.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood5.jpg" alt="Wood 5"><div class="meta"><button class="view-btn" data-src="images/Wood/wood5.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood6.jpg" alt="Wood 6"><div class="meta"><button class="view-btn" data-src="images/Wood/wood6.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood7.jpg" alt="Wood 7"><div class="meta"><button class="view-btn" data-src="images/Wood/wood7.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood8.jpg" alt="Wood 8"><div class="meta"><button class="view-btn" data-src="images/Wood/wood8.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood9.jpg" alt="Wood 9"><div class="meta"><button class="view-btn" data-src="images/Wood/wood9.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood10.jpg" alt="Wood 10"><div class="meta"><button class="view-btn" data-src="images/Wood/wood10.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood11.jpg" alt="Wood 11"><div class="meta"><button class="view-btn" data-src="images/Wood/wood11.jpg">View</button></div></div>
+        <div class="card"><img src="images/Wood/wood12.jpg" alt="Wood 12"><div class="meta"><button class="view-btn" data-src="images/Wood/wood12.jpg">View</button></div></div>
+      </div>
+    </section>
+
+
+    <!-- ABOUT & CONTACT -->
+    <section id="about" style="margin-top:36px">
+      <div class="split">
+        <div class="card-panel">
+          <h3 style="margin-top:0">About Concrete Arts</h3>
+          <p style="color:var(--muted)"><span class="text-bold">HARI KRISHNAN</span>
+              (Business-Owner)<br/>
+              We are a specialized artistic construction company creating premium, nature-inspired designs using cement. We blend creativity, craftsmanship, and durability to transform spaces into timeless art.
+          </p>
+          <ul style="color:var(--muted)">
+            <li>Natural cement sculptures</li>
+            <li>Skilled artistic craftsmanship</li>
+            <li>Durable, high-quality materials</li>
+          </ul>
+        </div>
+
+        <aside id="contact" class="card-panel">
+          <div style="font-weight:800;margin-bottom:12px">Contact</div>
+          <div class="contact-row"><div class="icon">📞</div><div><div style="font-weight:700">Phone</div><a href="tel:+919940758533">+91 9940758533</a></div></div>
+          <div class="contact-row"><div class="icon">💬</div><div><div style="font-weight:700">WhatsApp</div><a href="https://wa.me/919940758533" target="_blank">+91 9940758533</a></div></div>
+          <div class="contact-row"><div class="icon">✉️</div><div><div style="font-weight:700">Email</div><a href="mailto:Concreteart25@gmail.com">Concreteart25@gmail.com</a></div></div>
+          <div style="
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-top:20px;
+">
+
+  <!-- Facebook -->
+  <a href="https://www.facebook.com/share/1G93uARio5/" target="_blank"
+     style="
+       width:48px;
+       height:48px;
+       display:flex;
+       justify-content:center;
+       align-items:center;
+       border-radius:50%;
+       background:#1877F2;
+       color:#fff;
+       font-size:22px;
+       text-decoration:none;
+     ">
+    <i class="fab fa-facebook-f"></i>
+  </a>
+
+  <!-- Instagram -->
+  <a href="https://instagram.com/concreteart75/" target="_blank"
+     style="
+       width:48px;
+       height:48px;
+       display:flex;
+       justify-content:center;
+       align-items:center;
+       border-radius:50%;
+       background:#E1306C;
+       color:#fff;
+       font-size:22px;
+       text-decoration:none;
+     ">
+    <i class="fab fa-instagram"></i>
+  </a>
+
+  <!-- LinkedIn -->
+  <a href="https://www.linkedin.com/in/concrete-art-183194395" target="_blank"
+     style="
+       width:48px;
+       height:48px;
+       display:flex;
+       justify-content:center;
+       align-items:center;
+       border-radius:50%;
+       background:#0A66C2;
+       color:#fff;
+       font-size:22px;
+       text-decoration:none;
+     ">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+
+</div>
+
+          <div style="margin-top:10px;color:var(--muted);font-size:13px">For commissions or exhibitions, mention "Website" in your message.</div>
+        </aside>
+      </div>
+    </section>
+
+    <div class="footer">© Concrete Arts — All rights reserved</div>
+  </div>
+
+  <!-- ===== Lightbox markup ===== -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-label="Image preview">
+    <button class="close" aria-label="Close preview">&times;</button>
+    <img src="" alt="Preview">
+  </div>
+
+  <script>
+    // Smooth scroll helper
+    function scrollToId(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.scrollIntoView({behavior:'smooth', block:'start'});
+      // close mobile nav if open
+      const t = document.querySelector('.nav-toggle');
+      if(t && t.checked) t.checked = false;
+    }
+
+    // Hook all view buttons + direct image clicks
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = lightbox.querySelector('img');
+    const closeBtn = lightbox.querySelector('.close');
+
+    // open lightbox with given src
+    function openLightbox(src, alt){
+      lbImg.src = src;
+      lbImg.alt = alt || '';
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden'; // prevent background scroll
+    }
+
+    // close
+    function closeLightbox(){
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden','true');
+      lbImg.src = '';
+      document.body.style.overflow = '';
+    }
+
+    // attach handlers to view buttons
+    document.querySelectorAll('.view-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const src = btn.getAttribute('data-src') || '';
+        // if data-src missing, try finding sibling img
+        const img = btn.closest('.card')?.querySelector('img');
+        openLightbox(src || img?.src, img?.alt);
+      });
+    });
+
+    // also allow clicking image to open
+    document.querySelectorAll('.card img').forEach(img=>{
+      img.addEventListener('click', ()=> openLightbox(img.src, img.alt));
+    });
+
+    // close on close button or background click or Esc
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e)=>{
+      if(e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape') closeLightbox();
+    });
+
+    // Accessibility: focus trap minimal (return focus to last clicked element)
+    let lastActive = null;
+    document.addEventListener('click', (e)=>{
+      const btn = e.target.closest('.view-btn') || e.target.closest('.card img');
+      if(btn){
+        lastActive = e.target;
+      }
+    });
+    closeBtn.addEventListener('click', ()=>{
+      if(lastActive) lastActive.focus();
+    });
+  </script>
+</body>
+</html>
